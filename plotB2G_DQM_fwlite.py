@@ -22,7 +22,7 @@ parser.add_option('--dir', metavar='F', type='string', action='store',
 parser.add_option('--coll', metavar='F', type='string', action='store',
                   dest='coll',
                   default="cmsTopTagPFJetsCHS",
-                  help='Collection to plot')
+                  help='Collection to plot. Options are ak5PFJets, ak5PFJetsCHS, ca8PFJetsCHS, ca8PFJetsCHSPruned, cmsTopTagPFJetsCHS')
 (options, args) = parser.parse_args()
 
 argv = []
