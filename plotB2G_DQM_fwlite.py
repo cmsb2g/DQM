@@ -58,10 +58,22 @@ histsToPlot = [
     'pfJet_pfnhef'
     ]
 
+globallabel = options.coll + '_' + options.labels[0] + '_vs_' + options.labels[1]
+htmlout = file( globallabel + '.html', 'w' )
+
+htmlbuffer = \
+    "<html>\n" + \
+    "<head>\n" + \
+    "<title>{0:s} versus {1:s}</title>\n" + \
+    "<table border=1>\n".format( options.labels[0], options.labels[1] )
+htmlout.write( htmlbuffer)
+
+
 hists = []
 canvs = []
 legs = []
 icanv = 0
+tableline = ""
 for hist in histsToPlot :
     canv = ROOT.TCanvas('c' + str(icanv), 'c' + str(icanv))
     index = 0
@@ -79,10 +91,21 @@ for hist in histsToPlot :
         else :
             h.Draw('hist same')
         index += 1
-        leg.AddEntry( h, options.labels[ifile], 'l')
+        leg.AddEntry( h, options.labels[ifile], 'l') 
     icanv += 1
     legs.append( leg )
     leg.Draw()
     canvs.append(canv)
-    canv.Print( 'hist_' + hist + '.png')
-    canv.Print( 'hist_' + hist + '.pdf')
+    histname = globallabel + '_' + hist
+    canv.Print(  histname + '.png')
+    canv.Print(  histname + '.pdf')
+    tableline = "<tr>  <a href=\"" + histname + ".pdf\"> <img src = \"" + histname + '.png' + "\" alt=\"" + histname + ".pdf\"> \n"
+    htmlout.write( tableline )
+
+htmlbuffer = \
+    "</table>\n" + \
+    "</head>\n" + \
+    "</html>\n"
+htmlout.write( htmlbuffer)
+
+htmlout.close()
