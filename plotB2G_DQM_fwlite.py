@@ -85,6 +85,9 @@ for hist in histsToPlot :
         print 'getting ' + s
         h = tfile.Get( s )
         h.SetLineColor( colors[index] )
+        h.Sumw2()
+        if h.Integral() > 0 : 
+            h.Scale(1.0 / h.Integral() )
         hists.append(h)
         if ifile == 0 :
             h.Draw('hist')
